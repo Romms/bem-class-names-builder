@@ -1,13 +1,17 @@
 # BEM class names builder
 
-`bem-class-names-builder`
-
-## Description
+[![npm version](https://img.shields.io/npm/v/bem-class-names-builder.svg)](https://www.npmjs.org/package/bem-class-names-builder)
 
 JavaScript class to build html classes by BEM methodology. 
 Each method `elem()`, `mod()`, `mix()` returns new modified object if arguments pass, otherwise returns corresponding value
  
 Method `toString()` convert object to BEM selector
+
+## Installation
+
+```bash
+npm install bem-class-names-builder
+```
 
 ## Examples
 
