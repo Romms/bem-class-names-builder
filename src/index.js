@@ -70,6 +70,10 @@ export default class BEM {
     }
 
     _makeArray (arr) {
+        if (!arr) {
+            return [];
+        }
+
         return Array.isArray(arr) ? arr.filter(Boolean) : [arr];
     }
 }

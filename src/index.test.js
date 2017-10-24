@@ -22,6 +22,13 @@ test('builds block with mods', () => {
     expect(page.mods(['full-width', 'white']).toString()).toBe('page page--full-width page--white');
 });
 
+test('builds block with false mods', () => {
+    const page = new BEM('page');
+
+    expect(page.mods(false && 'full-width').toString()).toBe('page');
+    expect(page.mods(['full-width', false && 'white']).toString()).toBe('page page--full-width');
+});
+
 test('builds bem with mixs', () => {
     const page = new BEM('page'),
         header = page.elem('header');
