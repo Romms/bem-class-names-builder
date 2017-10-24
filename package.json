@@ -1,0 +1,11 @@
+{
+  "name": "bem-class-names-builder",
+  "version": "0.0.0",
+  "description": "One more BEM class names builder",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
