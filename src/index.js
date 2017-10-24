@@ -17,10 +17,6 @@ export default class BEM {
         return [cls, ...mods, ...this._mixs].join(' ')
     }
 
-    cls (mix) {
-        return this.mix(mix).toString();
-    }
-
     block (block) {
         if (arguments.length === 0) {
             return this._block
