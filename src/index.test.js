@@ -12,21 +12,21 @@ test('builds elements with mods', () => {
     const header = new BEM('page').elem('header');
 
     expect(header.mods('full-width').toString()).toBe('page__header page__header--full-width');
-    expect(header.mods(['full-width', 'white']).toString()).toBe('page__header page__header--full-width page__header--white');
+    expect(header.mods('full-width', 'white').toString()).toBe('page__header page__header--full-width page__header--white');
 });
 
 test('builds block with mods', () => {
     const page = new BEM('page');
 
     expect(page.mods('full-width').toString()).toBe('page page--full-width');
-    expect(page.mods(['full-width', 'white']).toString()).toBe('page page--full-width page--white');
+    expect(page.mods('full-width', 'white').toString()).toBe('page page--full-width page--white');
 });
 
 test('builds block with false mods', () => {
     const page = new BEM('page');
 
     expect(page.mods(false && 'full-width').toString()).toBe('page');
-    expect(page.mods(['full-width', false && 'white']).toString()).toBe('page page--full-width');
+    expect(page.mods('full-width', false && 'white').toString()).toBe('page page--full-width');
 });
 
 test('builds bem with mixs', () => {
@@ -34,5 +34,5 @@ test('builds bem with mixs', () => {
         header = page.elem('header');
 
     expect(page.mix('container').toString()).toBe('page container');
-    expect(header.mix(['title', 'top']).toString()).toBe('page__header title top');
+    expect(header.mix('title', 'top').toString()).toBe('page__header title top');
 });

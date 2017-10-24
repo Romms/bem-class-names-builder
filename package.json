@@ -1,6 +1,6 @@
 {
   "name": "bem-class-names-builder",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "One more BEM class names builder",
   "main": "./dist/index.js",
   "scripts": {

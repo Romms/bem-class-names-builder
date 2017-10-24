@@ -3,23 +3,23 @@ export default class BEM {
         this._block = block;
         this._elem = undefined;
         this._mods = [];
-        this._mixs = []
+        this._mixs = [];
     }
 
     toString () {
         if (!this._block) {
-            console.error('Block name isn\'t set')
+            console.error('Block name isn\'t set');
         }
 
         const cls = this._elem ? `${this._block}__${this._elem}` : `${this._block}`,
             mods = this._mods.map(mod => `${cls}--${mod}`);
 
-        return [cls, ...mods, ...this._mixs].join(' ')
+        return [cls, ...mods, ...this._mixs].join(' ');
     }
 
     block (block) {
         if (arguments.length === 0) {
-            return this._block
+            return this._block;
         }
 
         const clone = this._getClone();
@@ -29,7 +29,7 @@ export default class BEM {
 
     elem (elem) {
         if (arguments.length === 0) {
-            return this._elem
+            return this._elem;
         }
 
         const clone = this._getClone();
@@ -37,29 +37,29 @@ export default class BEM {
         return clone;
     }
 
-    mods (mods) {
+    mods (...mods) {
         if (arguments.length === 0) {
-            return this._mods
+            return this._mods;
         }
 
         const clone = this._getClone();
-        clone._mods = this._makeArray(mods);
+        clone._mods = mods.filter(Boolean);
         return clone;
     }
 
-    mix (mix) {
+    mix (...mixs) {
         if (arguments.length === 0) {
-            return this._mixs
+            return this._mixs;
         }
 
         const clone = this._getClone();
-        clone._mixs = this._makeArray(mix);
+        clone._mixs = mixs.filter(Boolean);
         return clone;
     }
 
     _getClone () {
-        const {_block, _elem, _mods, _mixs} = this;
-        const clone = new BEM();
+        const {_block, _elem, _mods, _mixs} = this,
+            clone = new BEM();
 
         clone._block = _block;
         clone._elem = _elem;
@@ -67,13 +67,5 @@ export default class BEM {
         clone._mixs = _mixs;
 
         return clone;
-    }
-
-    _makeArray (arr) {
-        if (!arr) {
-            return [];
-        }
-
-        return Array.isArray(arr) ? arr.filter(Boolean) : [arr];
     }
 }
