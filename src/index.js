@@ -1,12 +1,12 @@
 export default class BEM {
-    constructor (block) {
+    constructor(block) {
         this._block = block;
         this._elem = undefined;
         this._mods = [];
         this._mixs = [];
     }
 
-    toString () {
+    toString() {
         if (!this._block) {
             console.error('Block name isn\'t set');
         }
@@ -17,7 +17,7 @@ export default class BEM {
         return [cls, ...mods, ...this._mixs].join(' ');
     }
 
-    block (block) {
+    block(block) {
         if (arguments.length === 0) {
             return this._block;
         }
@@ -27,7 +27,7 @@ export default class BEM {
         return clone;
     }
 
-    elem (elem) {
+    elem(elem) {
         if (arguments.length === 0) {
             return this._elem;
         }
@@ -37,7 +37,7 @@ export default class BEM {
         return clone;
     }
 
-    mods (...mods) {
+    mods(...mods) {
         if (arguments.length === 0) {
             return this._mods;
         }
@@ -47,7 +47,7 @@ export default class BEM {
         return clone;
     }
 
-    mix (...mixs) {
+    mix(...mixs) {
         if (arguments.length === 0) {
             return this._mixs;
         }
@@ -57,7 +57,7 @@ export default class BEM {
         return clone;
     }
 
-    _getClone () {
+    _getClone() {
         const {_block, _elem, _mods, _mixs} = this,
             clone = new BEM();
 
