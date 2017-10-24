@@ -2,7 +2,7 @@ export default class BEM {
     constructor(block) {
         this._block = block;
         this._elem = undefined;
-        this._mods = [];
+        this._mods = {};
         this._mixs = [];
     }
 
@@ -12,7 +12,17 @@ export default class BEM {
         }
 
         const cls = this._elem ? `${this._block}__${this._elem}` : `${this._block}`,
-            mods = this._mods.map(mod => `${cls}--${mod}`);
+            mods = Object.keys(this._mods)
+                .map(mod => [mod, this._mods[mod]])
+                .filter(([mod, value]) => value !== false)
+                .map(([mod, value]) => {
+                    const modStr = `${cls}--${mod}`;
+
+                    return value === true
+                        ? modStr
+                        : `${modStr}_${value}`;
+
+                });
 
         return [cls, ...mods, ...this._mixs].join(' ');
     }
@@ -43,7 +53,12 @@ export default class BEM {
         }
 
         const clone = this._getClone();
-        clone._mods = mods.filter(Boolean);
+        clone._mods = Object.assign(
+            {},
+            ...mods
+                .filter(Boolean)
+                .map(mod => typeof mod === 'object' ? mod : {[mod]: true})
+        );
         return clone;
     }
 
