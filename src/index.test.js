@@ -52,3 +52,22 @@ test('builds bem with mixs', () => {
     expect(page.mix('container').toString()).toBe('page container');
     expect(header.mix('title', 'top').toString()).toBe('page__header title top');
 });
+
+test('builds empty mods', () => {
+    const b = new BEM('b');
+
+    expect(b.mods(null, undefined, false, 0, 'string').toString()).toBe('b b--0 b--string');
+    expect(b.mods({
+        one: null,
+        two: undefined,
+        three: false,
+        four: 0,
+        five: 'string'
+    }).toString()).toBe('b b--four_0 b--five_string');
+});
+
+test('builds empty mixs', () => {
+    const b = new BEM('b');
+
+    expect(b.mix(null, undefined, false, 0, 'string').toString()).toBe('b 0 string');
+});

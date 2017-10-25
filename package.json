@@ -1,13 +1,13 @@
 {
   "name": "bem-class-names-builder",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "One more BEM class names builder",
   "main": "./dist/index.js",
   "scripts": {
     "build": "babel ./src --out-dir ./dist",
     "test": "jest"
   },
-  "author": "",
+  "author": "Roman Shevhuk",
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.26.0",

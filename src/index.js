@@ -14,15 +14,8 @@ export default class BEM {
         const cls = this._elem ? `${this._block}__${this._elem}` : `${this._block}`,
             mods = Object.keys(this._mods)
                 .map(mod => [mod, this._mods[mod]])
-                .filter(([mod, value]) => value !== false)
-                .map(([mod, value]) => {
-                    const modStr = `${cls}--${mod}`;
-
-                    return value === true
-                        ? modStr
-                        : `${modStr}_${value}`;
-
-                });
+                .filter(([mod, value]) => !this._isEmpty(value))
+                .map(([mod, value]) => `${cls}--${value === true ? mod : `${mod}_${value}`}`);
 
         return [cls, ...mods, ...this._mixs].join(' ');
     }
@@ -56,7 +49,7 @@ export default class BEM {
         clone._mods = Object.assign(
             {},
             ...mods
-                .filter(Boolean)
+                .filter(mod => !this._isEmpty(mod))
                 .map(mod => typeof mod === 'object' ? mod : {[mod]: true})
         );
         return clone;
@@ -68,7 +61,7 @@ export default class BEM {
         }
 
         const clone = this._getClone();
-        clone._mixs = mixs.filter(Boolean);
+        clone._mixs = mixs.filter(mix => !this._isEmpty(mix));
         return clone;
     }
 
@@ -82,5 +75,9 @@ export default class BEM {
         clone._mixs = _mixs;
 
         return clone;
+    }
+
+    _isEmpty(value) {
+        return value === undefined || value === null || value === false
     }
 }
