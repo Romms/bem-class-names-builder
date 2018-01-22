@@ -1,9 +1,17 @@
 export default class BEM {
+    static get defaultConfig() {
+        return {
+            prefix: null,
+            modValues: true
+        }
+    }
+
     constructor(block) {
         this._block = block;
         this._elem = undefined;
         this._mods = {};
         this._mixs = [];
+        this.config = BEM.defaultConfig;
     }
 
     toString() {
@@ -11,11 +19,18 @@ export default class BEM {
             console.error('Block name isn\'t set');
         }
 
-        const cls = this._elem ? `${this._block}__${this._elem}` : `${this._block}`,
+        const {prefix, modValues} = this.config;
+
+        let cls = this._elem ? `${this._block}__${this._elem}` : `${this._block}`,
             mods = Object.keys(this._mods)
                 .map(mod => [mod, this._mods[mod]])
                 .filter(([mod, value]) => !this._isEmpty(value))
-                .map(([mod, value]) => `${cls}--${value === true ? mod : `${mod}_${value}`}`);
+                .map(([mod, value]) => `${cls}--${value === true || !modValues ? mod : `${mod}_${value}`}`);
+
+        if (prefix) {
+            cls = `${prefix}_${cls}`;
+            mods = mods.map(mod => `${prefix}_${mod}`);
+        }
 
         return [cls, ...mods, ...this._mixs].join(' ');
     }
@@ -25,7 +40,7 @@ export default class BEM {
             return this._block;
         }
 
-        const clone = this._getClone();
+        const clone = this.clone();
         clone._block = block;
         return clone;
     }
@@ -35,7 +50,7 @@ export default class BEM {
             return this._elem;
         }
 
-        const clone = this._getClone();
+        const clone = this.clone();
         clone._elem = elem;
         return clone;
     }
@@ -45,7 +60,7 @@ export default class BEM {
             return this._mods;
         }
 
-        const clone = this._getClone();
+        const clone = this.clone();
         clone._mods = Object.assign(
             {},
             ...mods
@@ -60,24 +75,35 @@ export default class BEM {
             return this._mixs;
         }
 
-        const clone = this._getClone();
+        const clone = this.clone();
         clone._mixs = mixs.filter(mix => !this._isEmpty(mix));
         return clone;
     }
 
-    _getClone() {
-        const {_block, _elem, _mods, _mixs} = this,
+    clone() {
+        const {_block, _elem, _mods, _mixs, config} = this,
             clone = new BEM();
 
         clone._block = _block;
         clone._elem = _elem;
-        clone._mods = _mods;
-        clone._mixs = _mixs;
+        clone._mods = {..._mods};
+        clone._mixs = [..._mixs];
+        clone.config = {...config};
 
         return clone;
     }
 
     _isEmpty(value) {
         return value === undefined || value === null || value === false
+    }
+}
+
+export function configBEM(config = {}) {
+    return class configuredBEM extends BEM {
+        constructor(block) {
+            super(block);
+
+            Object.assign(this.config, config);
+        }
     }
 }

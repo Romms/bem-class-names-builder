@@ -1,4 +1,4 @@
-import BEM from './index';
+import BEM from '../src/index';
 
 test('builds elements', () => {
     const page = new BEM('page');
