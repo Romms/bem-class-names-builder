@@ -1,12 +1,10 @@
 {
   "name": "bem-class-names-builder",
-  "version": "1.3.4",
+  "version": "1.4.0",
   "description": "One more BEM class names builder",
   "main": "dist/index.js",
   "files": [
-    "dist",
-    "src",
-    "tests"
+    "dist"
   ],
   "scripts": {
     "build": "babel ./src --out-dir ./dist",

@@ -2,7 +2,10 @@ export default class BEM {
     static get defaultConfig() {
         return {
             prefix: null,
-            modValues: true
+            modValues: true,
+            elemSeparator: '__',
+            modSeparator: '--',
+            modValueSeparator: '_'
         }
     }
 
@@ -19,17 +22,17 @@ export default class BEM {
             console.error('Block name isn\'t set');
         }
 
-        const {prefix, modValues} = this.config;
+        const {prefix, modValues, elemSeparator, modSeparator, modValueSeparator} = this.config;
 
-        let cls = this._elem ? `${this._block}__${this._elem}` : `${this._block}`,
+        let cls = this._elem ? this._block + elemSeparator + this._elem : this._block,
             mods = Object.keys(this._mods)
                 .map(mod => [mod, this._mods[mod]])
                 .filter(([mod, value]) => !this._isEmpty(value))
-                .map(([mod, value]) => `${cls}--${value === true || !modValues ? mod : `${mod}_${value}`}`);
+                .map(([mod, value]) => cls + modSeparator + (value === true || !modValues ? mod : mod + modValueSeparator + value));
 
         if (prefix) {
-            cls = `${prefix}_${cls}`;
-            mods = mods.map(mod => `${prefix}_${mod}`);
+            cls = prefix + cls;
+            mods = mods.map(mod => prefix + mod);
         }
 
         return [cls, ...mods, ...this._mixs].join(' ');
@@ -86,9 +89,9 @@ export default class BEM {
 
         clone._block = _block;
         clone._elem = _elem;
-        clone._mods = {..._mods};
-        clone._mixs = [..._mixs];
-        clone.config = {...config};
+        clone._mods = Object.assign({}, _mods);
+        clone._mixs = _mixs.slice();
+        clone.config = Object.assign({}, config);
 
         return clone;
     }

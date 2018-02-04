@@ -1,6 +1,6 @@
 import {configBEM} from '../src/index';
 
-const BEMWithPrefix = configBEM({prefix: 'pr'});
+const BEMWithPrefix = configBEM({prefix: 'pr-'});
 
 test('check memory links', () => {
     const bem1 = new BEMWithPrefix('block1').elem('elem1').mods('mod1').mix('mix1'),
@@ -9,7 +9,7 @@ test('check memory links', () => {
     bem2._mods.mod = true;
     bem2._mixs.push('mix');
 
-    expect(bem1.toString()).toBe('pr_block1__elem1 pr_block1__elem1--mod1 mix1');
-    expect(bem2.toString()).toBe('pr_block1__elem1 pr_block1__elem1--mod1 pr_block1__elem1--mod mix1 mix');
+    expect(bem1.toString()).toBe('pr-block1__elem1 pr-block1__elem1--mod1 mix1');
+    expect(bem2.toString()).toBe('pr-block1__elem1 pr-block1__elem1--mod1 pr-block1__elem1--mod mix1 mix');
     expect(bem1.config).not.toBe(bem2.config);
 });

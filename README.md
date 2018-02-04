@@ -13,6 +13,41 @@ Method `toString()` convert object to BEM selector
 npm install bem-class-names-builder
 ```
 
+## Configuring
+
+Default config
+
+```javascript
+{
+    prefix: null,
+    modValues: true,
+    elemSeparator: '__',
+    modSeparator: '--',
+    modValueSeparator: '_'
+}
+```
+
+Set own config
+
+```javascript
+// myBEM.js
+import {configBEM} from 'bem-class-names-builder';
+
+export default configBEM({
+    prefix: 'cp-',
+    modValues: false,
+    elemSeparator: '---',
+}) 
+```
+
+```javascript
+// usingMyBEM.js
+
+import BEM from 'myBEM.js';
+
+(new BEM('block').elem('elem')).toString() === 'cp-block---elem';
+```
+
 ## Examples
 
 #### Plain JavaScript
